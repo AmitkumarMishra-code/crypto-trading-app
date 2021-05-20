@@ -4,7 +4,6 @@ import Transaction from './Transaction'
 
 export default function TransactionsList() {
     let { transactions } = useContext(CryptoContext)
-    console.log(transactions)
     useEffect(() => { }, [transactions])
     return (
         <div className="transactions-list">

@@ -1,15 +1,20 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import CryptoContext from '../contexts/CryptoContext'
 
 export default function PopUp({ visible, selected, setVisible }) {
     let [quantity, setQuantity] = useState('0')
     let [checked, setChecked] = useState('Buy')
     let [disabled, setDisabled] = useState(false)
-
+    let inputRef = useRef();
     let { data, wallet, changeWallet, portfolio, changePortfolio, transactions, changeTransactions } = useContext(CryptoContext);
+
+
 
     let changeHandler = (e) => {
         setChecked(e.target.value)
+        setQuantity('0')
+        inputRef.current.value = '0'
+        checkDisabled()
     }
 
     let closeDialogBox = () => {
@@ -50,7 +55,7 @@ export default function PopUp({ visible, selected, setVisible }) {
     }
 
     let maxClickHandler = (e) => {
-        e.target.previousSibling.value = e.target.innerText.split(' ')[1]
+        inputRef.current.value = e.target.innerText.split(' ')[1]
         setQuantity(e.target.innerText.split(' ')[1])
     }
 
@@ -65,8 +70,8 @@ export default function PopUp({ visible, selected, setVisible }) {
                     setDisabled(wallet < data[selected].currentPrice * Number(quantity))
                 }
             }
-        } else {
-            if (Number(quantity === 0)) {
+        } else{
+            if (Number(quantity) === 0) {
                 setDisabled(true)
             } else {
                 setDisabled(Number(quantity) > portfolio[selected].currentHolding)
@@ -99,7 +104,7 @@ export default function PopUp({ visible, selected, setVisible }) {
                     <div className="dialog-box-body">
                         <p className='currentprice'>Current Price : {data[selected].currentPrice}</p>
                         <div className="input-box" >
-                            <input type="number" min='0' step='any' onChange={(e) => setQuantity(e.target.value)} />
+                            <input type="number" ref={inputRef} min='0' step='any' onChange={(e) => setQuantity(e.target.value)} />
                             <p className='max' onClick={maxClickHandler}>Max: {checked === 'Buy' ? (wallet / data[selected].currentPrice).toFixed(6) : portfolio[selected].currentHolding}</p>
                         </div>
                         <p className='amount-display' style={{ opacity: Number(quantity) > 0 ? '1' : '0' }}>You {checked === 'Buy' ? 'will be charged' : 'will receive'} : {(Number(quantity) * data[selected].currentPrice).toFixed(2)}</p>

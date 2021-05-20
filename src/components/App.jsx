@@ -20,11 +20,8 @@ export default function App(props) {
         let response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2C%20dogecoin%2C%20ethereum&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=24h')
         let data = await response.json()
         data = data.map(val => ({ percentageChange: val.price_change_percentage_24h_in_currency, name: val.name, image: val.image, currentPrice: val.current_price }))
-        console.log(data)
         setData(data)
-
         setLoading(false)
-
     }
     return (
         <CryptoContext.Provider value={{ transactions: transactions, changeTransactions: setTransactions, data: data, wallet: wallet, changeWallet: setWallet, portfolio: portfolio, changePortfolio: setPortfolio }}>
@@ -38,8 +35,3 @@ export default function App(props) {
         </CryptoContext.Provider>
     )
 }
-
-// price_change_percentage_24h_in_currency
-// name
-// image:
-// current_price

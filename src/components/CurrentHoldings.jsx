@@ -7,7 +7,6 @@ export default function CurrentHoldings() {
     let [activeHoldings, setActiveHoldings] = useState(portfolio.filter(coin => coin.currentHolding > 0))
 
     useEffect(() => {
-        console.log(activeHoldings)
         setActiveHoldings(portfolio.filter(coin => coin.currentHolding > 0))
         // eslint-disable-next-line
     }, [portfolio])
