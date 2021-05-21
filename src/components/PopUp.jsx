@@ -79,6 +79,14 @@ export default function PopUp({ visible, selected, setVisible }) {
         }
     }
 
+    let getMaxBuy = () => {
+        let maxBuyQty = (wallet / data[selected].currentPrice).toString()
+        if(maxBuyQty.length > 8){
+            maxBuyQty = maxBuyQty.substring(0, 8)
+        }
+        return Number(maxBuyQty)
+    }
+
     useEffect(() => {
         if (!visible) {
             setQuantity('0')
@@ -105,7 +113,7 @@ export default function PopUp({ visible, selected, setVisible }) {
                         <p className='currentprice'>Current Price : {data[selected].currentPrice}</p>
                         <div className="input-box" >
                             <input type="number" ref={inputRef} min='0' step='any' onChange={(e) => setQuantity(e.target.value)} />
-                            <p className='max' onClick={maxClickHandler}>Max: {checked === 'Buy' ? (wallet / data[selected].currentPrice).toFixed(6) : portfolio[selected].currentHolding}</p>
+                            <p className='max' onClick={maxClickHandler}>Max: {checked === 'Buy' ? getMaxBuy() : portfolio[selected].currentHolding}</p>
                         </div>
                         <p className='amount-display' style={{ opacity: Number(quantity) > 0 ? '1' : '0' }}>You {checked === 'Buy' ? 'will be charged' : 'will receive'} : {(Number(quantity) * data[selected].currentPrice).toFixed(2)}</p>
                         <div className="radio-buttons">

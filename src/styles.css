@@ -161,9 +161,10 @@ img {
 .pop-up .dialog-box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: flex-start;
-    width: 30%;
+    width: 25%;
+    height: 35%;
     background-color: white;
     border-radius: 12px;
 }
@@ -187,6 +188,8 @@ img {
     align-items: flex-start;
     padding: 5px 10px;
     gap: 10px;
+    width: 100%;
+    flex: 1;
 }
 
 .radio-buttons .buy-radio,
