@@ -23,7 +23,7 @@ export default function PopUp({ visible, selected, setVisible }) {
 
     let transactionHandler = () => {
         let amount = Number((Number(quantity) * data[selected].currentPrice).toFixed(2))
-        changeWallet(checked === 'Buy' ? (wallet - amount < 0 ? 0 : wallet - amount) : wallet + amount)
+        changeWallet(checked === 'Buy' ? (wallet - amount <= 0 ? 0 : Number((wallet - amount).toFixed(2))) : Number((wallet + amount).toFixed(2)))
         let newPortfolio = [...portfolio]
         let currentHoldings = newPortfolio[selected].currentHolding
         newPortfolio[selected].currentHolding = checked === 'Buy' ? currentHoldings + Number(quantity) : currentHoldings - Number(quantity)
